@@ -46,3 +46,11 @@ def delete_contact(request, pk):
 
     return render(request, "contacts/delete_contact.html",
                   {"contact": contact})
+
+
+def see_contact(request, pk):
+    contact = get_object_or_404(Contact, pk=pk)
+    if request.method == 'GET':
+        form = ContactForm(instance=contact)
+
+    return render(request, 'contacts/see_contact.html', {'contact': contact})

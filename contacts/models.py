@@ -3,6 +3,11 @@ from django.core.validators import RegexValidator
 from localflavor.us.models import USStateField, USZipCodeField
 
 
+class Note(models.Model):
+    time = models.DateTimeField(auto_now_add=True)
+    body = models.CharField(max_length=10000)
+
+
 class Contact(models.Model):
     phone_regex = RegexValidator(
         regex=r'^\+?\d{10}$',
@@ -21,6 +26,7 @@ class Contact(models.Model):
     zip_code = USZipCodeField(null=True, blank=True)
     birthday = models.DateField(null=True, blank=True)
 
+    note = models.ForeignKey(Note, null=True, on_delete=models.SET_NULL)
 
-class Note(models.Model):
-    time = models.DateTimeField()
+    def __str__(self):
+        return self.name
